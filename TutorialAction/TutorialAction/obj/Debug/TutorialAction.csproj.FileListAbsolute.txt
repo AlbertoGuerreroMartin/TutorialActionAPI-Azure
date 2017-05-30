@@ -51,3 +51,6 @@ C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\b
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\bin\EntityFramework.SqlServer.xml
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.Initial.resources
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.csproj.GenerateResource.Cache
+C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.AddLogin.resources
+C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.UserIDOptional.resources
+C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.FixLoginPrimaryKey.resources

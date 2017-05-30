@@ -20,5 +20,6 @@ namespace TutorialAction.Models
         }
 
         public System.Data.Entity.DbSet<TutorialAction.Models.User> Users { get; set; }
+        public System.Data.Entity.DbSet<TutorialAction.Models.Login> Logins { get; set; }
     }
 }

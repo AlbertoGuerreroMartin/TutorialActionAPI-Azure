@@ -120,10 +120,22 @@
     <Compile Include="Migrations\201705261939075_Initial.Designer.cs">
       <DependentUpon>201705261939075_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705301523066_AddLogin.cs" />
+    <Compile Include="Migrations\201705301523066_AddLogin.Designer.cs">
+      <DependentUpon>201705301523066_AddLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705301546052_UserIDOptional.cs" />
+    <Compile Include="Migrations\201705301546052_UserIDOptional.Designer.cs">
+      <DependentUpon>201705301546052_UserIDOptional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705301557547_FixLoginPrimaryKey.cs" />
+    <Compile Include="Migrations\201705301557547_FixLoginPrimaryKey.Designer.cs">
+      <DependentUpon>201705301557547_FixLoginPrimaryKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Login.cs" />
     <Compile Include="Models\TutorialActionContext.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +151,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201705261939075_Initial.resx">
       <DependentUpon>201705261939075_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705301523066_AddLogin.resx">
+      <DependentUpon>201705301523066_AddLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705301546052_UserIDOptional.resx">
+      <DependentUpon>201705301546052_UserIDOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705301557547_FixLoginPrimaryKey.resx">
+      <DependentUpon>201705301557547_FixLoginPrimaryKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
