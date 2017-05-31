@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace TutorialAction.Models
         [Key]
         public int userID { get; set; }
         public string username { get; set; }
+
+        [JsonIgnore]
+        [DataType(DataType.Password)]
+        public string password { get; set; }
+
         public string firstname { get; set; }
         public string lastname { get; set; }
         [DataType(DataType.EmailAddress)]

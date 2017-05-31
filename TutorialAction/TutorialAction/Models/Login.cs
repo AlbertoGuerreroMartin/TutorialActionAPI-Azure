@@ -19,5 +19,11 @@ namespace TutorialAction.Models
         public int? userID { get; set; }
         [ForeignKey("userID")]
         public virtual User user { get; set; }
+
+        public Login(string apiKey, int? userID)
+        {
+            this.apiKey = apiKey;
+            this.userID = userID;
+        }
     }
 }

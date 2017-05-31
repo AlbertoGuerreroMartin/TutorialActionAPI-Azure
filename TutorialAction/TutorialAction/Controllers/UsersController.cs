@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -18,6 +19,7 @@ namespace TutorialAction.Controllers
         private TutorialActionContext db = new TutorialActionContext();
 
         // GET: api/Users
+        [Authorize]
         public IQueryable<User> GetUsers()
         {
             return db.Users;
@@ -79,6 +81,9 @@ namespace TutorialAction.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            var _repo = new AuthRepository();
+            IdentityResult result = await _repo.RegisterUser(user);
 
             db.Users.Add(user);
             await db.SaveChangesAsync();
