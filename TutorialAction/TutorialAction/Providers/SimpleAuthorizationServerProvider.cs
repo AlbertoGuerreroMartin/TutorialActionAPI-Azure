@@ -36,8 +36,7 @@ namespace TutorialAction.Providers
             var tutorialActionContext = new TutorialActionContext();
             var user = tutorialActionContext.Users.Where(u => u.username == context.UserName).FirstOrDefault();
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            identity.AddClaim(new Claim("username", user.username));
-            identity.AddClaim(new Claim("role", user.role));
+            identity.AddClaim(new Claim(ClaimTypes.Role, user.role));
 
             context.Validated(identity);
         }

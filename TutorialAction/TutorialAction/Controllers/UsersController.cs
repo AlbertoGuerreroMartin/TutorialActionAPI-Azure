@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,9 +21,9 @@ namespace TutorialAction.Controllers
 
         // GET: api/Users
         [Authorize]
-        public IQueryable<User> GetUsers()
+        public string GetUsers()
         {
-            return db.Users;
+            return new JObject(new JArray(db.Users.ToList().Select(TutorialAction.Models.User.userJsonParser()))).ToString();
         }
 
         // GET: api/Users/5

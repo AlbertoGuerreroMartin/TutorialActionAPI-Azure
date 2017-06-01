@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,7 +14,6 @@ namespace TutorialAction.Models
         public int userID { get; set; }
         public string username { get; set; }
 
-        [JsonIgnore]
         [DataType(DataType.Password)]
         public string password { get; set; }
 
@@ -22,5 +22,17 @@ namespace TutorialAction.Models
         [DataType(DataType.EmailAddress)]
         public string email { get; set; }
         public string role { get; set; }
+
+        public static Func<User, JObject> userJsonParser()
+        {
+            return u => new JObject(new JProperty[] {
+                new JProperty("userID", u.userID),
+                new JProperty("username", u.username),
+                new JProperty("firstname", u.firstname),
+                new JProperty("lastname", u.lastname),
+                new JProperty("email", u.email),
+                new JProperty("role", u.role)
+            });
+        }
     }
 }
