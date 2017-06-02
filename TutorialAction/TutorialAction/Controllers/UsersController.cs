@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -9,28 +10,52 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TutorialAction.Models;
 
 namespace TutorialAction.Controllers
 {
+    [RoutePrefix("api/user")]
     public class UsersController : ApiController
     {
-        private TutorialActionContext db = new TutorialActionContext();
+        private TutorialActionContext tutorialActionContext = new TutorialActionContext();
+        private UserManager<User> userManager { get; set; }
+        private RoleManager<IdentityRole> roleManager { get; set; }
 
-        // GET: api/Users
-        [Authorize]
-        public string GetUsers()
+        public UsersController()
         {
-            return new JObject(new JArray(db.Users.ToList().Select(TutorialAction.Models.User.userJsonParser()))).ToString();
+            userManager = new UserManager<User>(new UserStore<User>(this.tutorialActionContext));
+            roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(this.tutorialActionContext));
+        }
+
+        // GET: api/user       <- DEBUG: returns all users
+        [Route("")]
+        [Authorize(Roles = "admin")]
+        public IQueryable<User> GetUsers()
+        {
+            return tutorialActionContext.Users;
+        }
+
+        // GET: api/user/info
+        [Authorize]
+        [Route("info")]
+        [ResponseType(typeof(User))]
+        public User GetInfo()
+        {
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            var roleName = roleManager.FindById(currentUser.Roles.First().RoleId).Name;
+            currentUser.courses = currentUser.courses.Select(Course.filterUsersByRole(roleName, roleManager)).ToList();     // Filter courses users of the opposite role
+            return currentUser;
+            // return new JObject(new JArray(db.Users.ToList().Select(Models.User.userJsonParser()))).ToString();
         }
 
         // GET: api/Users/5
         [ResponseType(typeof(User))]
-        public async Task<IHttpActionResult> GetUser(int id)
+        public IHttpActionResult GetUser(int id)
         {
-            User user = await db.Users.FindAsync(id);
+            User user = tutorialActionContext.Users.Find(id);
             if (user == null)
             {
                 return NotFound();
@@ -41,23 +66,23 @@ namespace TutorialAction.Controllers
 
         // PUT: api/Users/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUser(int id, User user)
+        public async Task<IHttpActionResult> PutUser(string id, User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             
-            if (id != user.userID)
+            if (id != user.Id)
             {
                 return BadRequest();
             }
-
-            db.Entry(user).State = EntityState.Modified;
+            
+            tutorialActionContext.Entry(user).State = EntityState.Modified;
 
             try
             {
-                await db.SaveChangesAsync();
+                await tutorialActionContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -76,20 +101,25 @@ namespace TutorialAction.Controllers
 
         // POST: api/Users
         [ResponseType(typeof(User))]
-        public async Task<IHttpActionResult> PostUser(User user)
+        public IHttpActionResult PostUser(UserRegisterViewModel userRegisterViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var _repo = new AuthRepository();
-            IdentityResult result = await _repo.RegisterUser(user);
+            var user = userRegisterViewModel.toUser();
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(tutorialActionContext));
+            var identityRole = roleManager.FindByName(userRegisterViewModel.role);
+            if(identityRole == null)
+            {
+                return BadRequest("Role '" + userRegisterViewModel.role + "' is not correct.");
+            }
 
-            db.Users.Add(user);
-            await db.SaveChangesAsync();
+            userManager.Create(user, userRegisterViewModel.password);
+            userManager.AddToRole(user.Id, userRegisterViewModel.role);
 
-            return CreatedAtRoute("DefaultApi", new { id = user.userID }, user);
+            return Ok("User '" + userRegisterViewModel.username + "' registered successfully.");
         }
 
         // POST: api/Login
@@ -101,16 +131,16 @@ namespace TutorialAction.Controllers
 
         // DELETE: api/Users/5
         [ResponseType(typeof(User))]
-        public async Task<IHttpActionResult> DeleteUser(int id)
+        public IHttpActionResult DeleteUser(int id)
         {
-            User user = await db.Users.FindAsync(id);
+            User user = tutorialActionContext.Users.Find(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            db.Users.Remove(user);
-            await db.SaveChangesAsync();
+            tutorialActionContext.Users.Remove(user);
+            tutorialActionContext.SaveChanges();
 
             return Ok(user);
         }
@@ -119,14 +149,14 @@ namespace TutorialAction.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                tutorialActionContext.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private bool UserExists(int id)
+        private bool UserExists(string id)
         {
-            return db.Users.Count(e => e.userID == id) > 0;
+            return tutorialActionContext.Users.Count(e => e.Id == id) > 0;
         }
     }
 }

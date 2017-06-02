@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using TutorialAction.Models;
 using TutorialAction.Providers;
 
 [assembly: OwinStartup(typeof(TutorialAction.Startup))]

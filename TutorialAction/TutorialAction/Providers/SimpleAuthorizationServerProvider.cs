@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
@@ -22,21 +23,18 @@ namespace TutorialAction.Providers
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-            using (AuthRepository _repo = new AuthRepository())
-            {
-                IdentityUser identityUser = await _repo.FindUser(context.UserName, context.Password);
+            var tutorialActionContext = new TutorialActionContext();
+            var userManager = new UserManager<User>(new UserStore<User>(tutorialActionContext));
 
-                if (identityUser == null)
-                {
-                    context.SetError("invalid_grant", "The user name or password is incorrect.");
-                    return;
-                }
+            var user = await userManager.FindAsync(context.UserName, context.Password);
+            if (user == null)
+            {
+                context.SetError("invalid_grant", "The user name or password is incorrect.");
+                return;
             }
 
-            var tutorialActionContext = new TutorialActionContext();
-            var user = tutorialActionContext.Users.Where(u => u.username == context.UserName).FirstOrDefault();
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            identity.AddClaim(new Claim(ClaimTypes.Role, user.role));
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
             context.Validated(identity);
         }

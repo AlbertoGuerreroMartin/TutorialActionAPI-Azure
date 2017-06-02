@@ -1,5 +1,7 @@
 namespace TutorialAction.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
     using System;
     using System.Data.Entity;
@@ -16,58 +18,52 @@ namespace TutorialAction.Migrations
 
         protected override void Seed(TutorialAction.Models.TutorialActionContext context)
         {
-            //  This method will be called after migrating to the latest version.
-            User jessica = new User
+            var userManager = new UserManager<User>(new UserStore<User>(context));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
+            roleManager.Create(new IdentityRole("admin"));
+            roleManager.Create(new IdentityRole("student"));
+            roleManager.Create(new IdentityRole("teacher"));
+
+            var jessica = new User
             {
-                username = "jessica",
-                password = "password",
+                UserName = "jessica",
+                Email = "jdiaz@etsisi.upm.es",
                 firstname = "Jessica",
-                lastname = "Díaz Fernández",
-                email = "jdiaz@etsisi.upm.es",
-                role = "teacher"
+                lastname = "Díaz Fernández"
             };
+            userManager.Create(jessica, "password");
+            userManager.AddToRole(jessica.Id, "teacher");
 
-            User jennifer = new User
+            var jennifer = new User
             {
-                username = "jennifer",
-                password = "password",
+                UserName = "jennifer",
+                Email = "jenifer.perez@etsisi.upm.es",
                 firstname = "Jennifer",
-                lastname = "Pérez Benedí",
-                email = "jenifer.perez@etsisi.upm.es",
-                role = "teacher"
+                lastname = "Pérez Benedí"
             };
+            userManager.Create(jennifer, "password");
+            userManager.AddToRole(jennifer.Id, "teacher");
 
-            User alberto = new User
+            var alberto = new User
             {
-                username = "alberto",
-                password = "password",
+                UserName = "alberto",
+                Email = "alberto170693@gmail.com",
                 firstname = "Alberto",
-                lastname = "Guerrero Martín",
-                email = "alberto.guerrero.martin@alumnos.upm.es",
-                role = "student"
+                lastname = "Guerrero Martín"
             };
+            userManager.Create(alberto, "password");
+            userManager.AddToRole(alberto.Id, "student");
 
-            AuthRepository _repo = new AuthRepository();
-            Task.Run(async () =>
-                await Task.WhenAll(
-                    _repo.RegisterUser(jessica),
-                    _repo.RegisterUser(jennifer),
-                    _repo.RegisterUser(alberto)
-                )
-            );
-
-            context.Users.AddOrUpdate(jessica, jennifer, alberto);
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            var admin = new User
+            {
+                UserName = "admin",
+                Email = "alberto170693@gmail.com",
+                firstname = "Admin",
+                lastname = "Admin Admin"
+            };
+            userManager.Create(admin, "password");
+            userManager.AddToRole(admin.Id, "admin");
         }
     }
 }

@@ -49,12 +49,6 @@ C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\b
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\bin\EntityFramework.SqlServer.dll
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\bin\EntityFramework.xml
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\bin\EntityFramework.SqlServer.xml
-C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.Initial.resources
-C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.csproj.GenerateResource.Cache
-C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.AddLogin.resources
-C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.UserIDOptional.resources
-C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.FixLoginPrimaryKey.resources
-C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.AddPassword.resources
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\bin\Microsoft.Owin.dll
@@ -73,3 +67,5 @@ C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\b
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\bin\Microsoft.Owin.Cors.xml
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\bin\Microsoft.Owin.Security.xml
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.Initial.resources
+C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.csproj.GenerateResource.Cache
