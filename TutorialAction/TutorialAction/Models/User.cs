@@ -39,6 +39,7 @@ namespace TutorialAction.Models
         public string firstname { get; set; }
         public string lastname { get; set; }
         public string role { get; set; }
+        public IList<string> courses { get; set; }  // List of courses IDs
 
         public User toUser()
         {

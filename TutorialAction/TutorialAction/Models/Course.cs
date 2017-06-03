@@ -28,6 +28,7 @@ namespace TutorialAction.Models
             this.courseName = courseName;
             this.users = users;
         }
+
         public static Func<Course, Course> filterUsersByRole(string role, RoleManager<IdentityRole> roleManager)
         {
             var oppositeRole = role == "teacher" ? "student" : "teacher";
@@ -41,5 +42,11 @@ namespace TutorialAction.Models
                 }).ToList()
             );
         }
+    }
+
+    public class CourseRegisterViewModel
+    {
+        public string courseName { get; set; }
+        public IList<string> users { get; set; }  // List of users IDs
     }
 }

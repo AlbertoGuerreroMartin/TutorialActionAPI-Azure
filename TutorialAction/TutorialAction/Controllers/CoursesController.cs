@@ -81,23 +81,23 @@ namespace TutorialAction.Controllers
         /// </summary>
         /// <param name="course">Course to insert. For users, only userID key is needed (user must existe before executing this request).</param>
         [ResponseType(typeof(Course))]
-        public async Task<IHttpActionResult> PostCourse(Course course)
+        public async Task<IHttpActionResult> PostCourse(CourseRegisterViewModel courseRegisterViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            foreach (User user in course.users)
+            var course = new Course
             {
-                User userToUpdate = db.Users.Find(user.Id);
-                if (userToUpdate != null)
+                courseName = courseRegisterViewModel.courseName
+            };
+            foreach (var userID in courseRegisterViewModel.users)
+            {
+                User user = db.Users.Find(userID);
+                if (user != null)
                 {
-                    userToUpdate.courses.Add(course);
-                    course.users.Add(userToUpdate);
-                    //db.Users.AddOrUpdate(userToUpdate);
-                    db.Entry(userToUpdate).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
+                    course.users.Add(user);
                 }
             }
 
