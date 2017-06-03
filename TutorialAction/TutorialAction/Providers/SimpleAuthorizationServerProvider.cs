@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using System;
 using System.Collections.Generic;
@@ -33,8 +34,11 @@ namespace TutorialAction.Providers
                 return;
             }
 
+            var userRole = userManager.GetRoles(user.Id).First();
+
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+            identity.AddClaim(new Claim(ClaimTypes.Role, userRole));    // This is, theoretically, handled automatically by OWIN. Setting role claim manually shouldn't be neccessary. But it just don't work.
 
             context.Validated(identity);
         }
