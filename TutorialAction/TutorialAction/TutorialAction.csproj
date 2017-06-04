@@ -154,12 +154,17 @@
     <Compile Include="Controllers\ReservesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Migrations\201706021849286_Initial.cs" />
-    <Compile Include="Migrations\201706021849286_Initial.Designer.cs">
-      <DependentUpon>201706021849286_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201706040121273_Initial.cs" />
+    <Compile Include="Migrations\201706040121273_Initial.Designer.cs">
+      <DependentUpon>201706040121273_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706040124566_AddReserveModel.cs" />
+    <Compile Include="Migrations\201706040124566_AddReserveModel.Designer.cs">
+      <DependentUpon>201706040124566_AddReserveModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\Reserve.cs" />
     <Compile Include="Models\TutorialActionContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -177,8 +182,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201706021849286_Initial.resx">
-      <DependentUpon>201706021849286_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201706040121273_Initial.resx">
+      <DependentUpon>201706040121273_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706040124566_AddReserveModel.resx">
+      <DependentUpon>201706040124566_AddReserveModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -51,54 +51,6 @@ namespace TutorialAction.Controllers
             // return new JObject(new JArray(db.Users.ToList().Select(Models.User.userJsonParser()))).ToString();
         }
 
-        // GET: api/Users/5
-        [ResponseType(typeof(User))]
-        public IHttpActionResult GetUser(int id)
-        {
-            User user = tutorialActionContext.Users.Find(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
-        }
-
-        // PUT: api/Users/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUser(string id, User user)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
-            
-            tutorialActionContext.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await tutorialActionContext.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
         // POST: api/Users
         [ResponseType(typeof(User))]
         public IHttpActionResult PostUser(UserRegisterViewModel userRegisterViewModel)
@@ -121,13 +73,6 @@ namespace TutorialAction.Controllers
 
             return Ok("User '" + userRegisterViewModel.username + "' registered successfully.");
         }
-
-        // POST: api/Login
-        //[ResponseType(typeof(String))]
-        //public IHttpActionResult PostLogin()
-        //{
-          //  return Ok("Hello PostLogin world");
-        //}
 
         // DELETE: api/Users/5
         [ResponseType(typeof(User))]

@@ -6,6 +6,7 @@ namespace TutorialAction.Migrations
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Data.Entity.Validation;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -21,10 +22,15 @@ namespace TutorialAction.Migrations
             var userManager = new UserManager<User>(new UserStore<User>(context));
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
-            roleManager.Create(new IdentityRole("admin"));
-            roleManager.Create(new IdentityRole("student"));
-            roleManager.Create(new IdentityRole("teacher"));
+            // Add roles
+            if (roleManager.FindByName("admin") == null)
+            {
+                roleManager.Create(new IdentityRole("admin"));
+                roleManager.Create(new IdentityRole("student"));
+                roleManager.Create(new IdentityRole("teacher"));
+            }
 
+            // Add default users
             var jessica = new User
             {
                 UserName = "jessica",
@@ -32,8 +38,11 @@ namespace TutorialAction.Migrations
                 firstname = "Jessica",
                 lastname = "Díaz Fernández"
             };
-            userManager.Create(jessica, "password");
-            userManager.AddToRole(jessica.Id, "teacher");
+            if (userManager.FindByName(jessica.UserName) == null)
+            {
+                userManager.Create(jessica, "password");
+                userManager.AddToRole(jessica.Id, "teacher");
+            }
 
             var jennifer = new User
             {
@@ -42,8 +51,24 @@ namespace TutorialAction.Migrations
                 firstname = "Jennifer",
                 lastname = "Pérez Benedí"
             };
-            userManager.Create(jennifer, "password");
-            userManager.AddToRole(jennifer.Id, "teacher");
+            if (userManager.FindByName(jennifer.UserName) == null)
+            {
+                userManager.Create(jennifer, "password");
+                userManager.AddToRole(jennifer.Id, "teacher");
+            }
+
+            var serradilla = new User
+            {
+                UserName = "fserra",
+                Email = "fserra@etsisi.upm.es",
+                firstname = "Francisco",
+                lastname = "Serradilla García"
+            };
+            if (userManager.FindByName(jennifer.UserName) == null)
+            {
+                userManager.Create(serradilla, "password");
+                userManager.AddToRole(serradilla.Id, "teacher");
+            }
 
             var alberto = new User
             {
@@ -52,8 +77,11 @@ namespace TutorialAction.Migrations
                 firstname = "Alberto",
                 lastname = "Guerrero Martín"
             };
-            userManager.Create(alberto, "password");
-            userManager.AddToRole(alberto.Id, "student");
+            if (userManager.FindByName(alberto.UserName) == null)
+            {
+                userManager.Create(alberto, "password");
+                userManager.AddToRole(alberto.Id, "student");
+            }
 
             var admin = new User
             {
@@ -62,8 +90,11 @@ namespace TutorialAction.Migrations
                 firstname = "Admin",
                 lastname = "Admin Admin"
             };
-            userManager.Create(admin, "password");
-            userManager.AddToRole(admin.Id, "admin");
+            if (userManager.FindByName(admin.UserName) == null)
+            {
+                userManager.Create(admin, "password");
+                userManager.AddToRole(admin.Id, "admin");
+            }
         }
     }
 }

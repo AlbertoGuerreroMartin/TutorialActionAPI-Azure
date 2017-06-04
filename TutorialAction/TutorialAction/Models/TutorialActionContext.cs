@@ -14,5 +14,6 @@ namespace TutorialAction.Models
         }
 
         public System.Data.Entity.DbSet<TutorialAction.Models.Course> Courses { get; set; }
+        public System.Data.Entity.DbSet<TutorialAction.Models.Reserve> Reserves { get; set; }
     }
 }
