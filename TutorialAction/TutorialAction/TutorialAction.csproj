@@ -170,11 +170,16 @@
     <Compile Include="Migrations\201706041831078_UpdateTimetableEntity.Designer.cs">
       <DependentUpon>201706041831078_UpdateTimetableEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706050158584_AddTutorshipModel.cs" />
+    <Compile Include="Migrations\201706050158584_AddTutorshipModel.Designer.cs">
+      <DependentUpon>201706050158584_AddTutorshipModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Reserve.cs" />
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TutorialActionContext.cs" />
+    <Compile Include="Models\Tutorship.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\GenericResponseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -203,6 +208,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706041831078_UpdateTimetableEntity.resx">
       <DependentUpon>201706041831078_UpdateTimetableEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706050158584_AddTutorshipModel.resx">
+      <DependentUpon>201706050158584_AddTutorshipModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
