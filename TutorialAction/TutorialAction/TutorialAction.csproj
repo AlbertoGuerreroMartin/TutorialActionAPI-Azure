@@ -154,7 +154,6 @@
     <Compile Include="Controllers\ReservesController.cs" />
     <Compile Include="Controllers\TimetablesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Migrations\201706040121273_Initial.cs" />
     <Compile Include="Migrations\201706040121273_Initial.Designer.cs">
       <DependentUpon>201706040121273_Initial.cs</DependentUpon>

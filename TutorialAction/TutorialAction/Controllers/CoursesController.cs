@@ -21,17 +21,19 @@ namespace TutorialAction.Controllers
     {
         private TutorialActionContext db = new TutorialActionContext();
 
-        // GET: api/Courses
+        // GET: api/courses
+        [Route("")]
         public IQueryable<Course> GetCourses()
         {
             return db.Courses;
         }
 
-        // GET: api/Courses/5
+        // GET: api/courses/5
+        [Route("{courseID:int}")]
         [ResponseType(typeof(Course))]
-        public async Task<IHttpActionResult> GetCourse(int id)
+        public async Task<IHttpActionResult> GetCourse(int courseID)
         {
-            Course course = await db.Courses.FindAsync(id);
+            Course course = await db.Courses.FindAsync(courseID);
             if (course == null)
             {
                 return NotFound();
@@ -40,46 +42,12 @@ namespace TutorialAction.Controllers
             return Ok(course);
         }
 
-        // PUT: api/Courses/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutCourse(int id, Course course)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != course.courseID)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(course).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CourseExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Courses
+        // POST: api/courses
         /// <summary>
         /// Inserts a new course into DB.
         /// </summary>
         /// <param name="course">Course to insert. For users, only userID key is needed (user must existe before executing this request).</param>
+        [Route("")]
         [ResponseType(typeof(Course))]
         public async Task<IHttpActionResult> PostCourse(CourseRegisterViewModel courseRegisterViewModel)
         {
@@ -107,11 +75,12 @@ namespace TutorialAction.Controllers
             return CreatedAtRoute("DefaultApi", new { id = course.courseID }, course);
         }
 
-        // DELETE: api/Courses/5
+        // DELETE: api/courses/5
+        [Route("{courseID:int}")]
         [ResponseType(typeof(Course))]
-        public async Task<IHttpActionResult> DeleteCourse(int id)
+        public async Task<IHttpActionResult> DeleteCourse(int courseID)
         {
-            Course course = await db.Courses.FindAsync(id);
+            Course course = await db.Courses.FindAsync(courseID);
             if (course == null)
             {
                 return NotFound();
@@ -130,11 +99,6 @@ namespace TutorialAction.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool CourseExists(int id)
-        {
-            return db.Courses.Count(e => e.courseID == id) > 0;
         }
     }
 }
