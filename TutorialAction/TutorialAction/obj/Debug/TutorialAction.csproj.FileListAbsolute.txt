@@ -70,3 +70,5 @@ C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\o
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.csproj.GenerateResource.Cache
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.AddReserveModel.resources
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.csprojResolveAssemblyReference.cache
+C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.AddTimetableEntity.resources
+C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.UpdateTimetableEntity.resources

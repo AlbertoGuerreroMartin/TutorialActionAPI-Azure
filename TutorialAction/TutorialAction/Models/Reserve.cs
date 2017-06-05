@@ -62,12 +62,6 @@ namespace TutorialAction.Models
         public string hour;
     }
 
-    public class CreateReserveResponseViewModel
-    {
-        public string statusCode;
-        public string message;
-    }
-
     public class ReserveResponseViewModel
     {
         public int reserveid;

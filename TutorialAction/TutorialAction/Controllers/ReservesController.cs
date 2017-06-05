@@ -55,8 +55,8 @@ namespace TutorialAction.Controllers
         // POST: api/reserves/create
         [Authorize(Roles = "student")]
         [Route("create")]
-        [ResponseType(typeof(CreateReserveResponseViewModel))]
-        public CreateReserveResponseViewModel Post(CreateReserveParametersViewModel parameters)
+        [ResponseType(typeof(GenericResponseViewModel))]
+        public GenericResponseViewModel Post(CreateReserveParametersViewModel parameters)
         {
             var currentUser = userManager.FindById(User.Identity.GetUserId());
             var reserve = new Reserve
@@ -72,7 +72,7 @@ namespace TutorialAction.Controllers
             tutorialActionContext.Reserves.Add(reserve);
             tutorialActionContext.SaveChanges();
 
-            return new CreateReserveResponseViewModel
+            return new GenericResponseViewModel
             {
                 statusCode = "200",
                 message = "Tutoría reservada correctamente."

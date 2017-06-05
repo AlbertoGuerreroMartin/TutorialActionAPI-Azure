@@ -52,6 +52,8 @@ namespace TutorialAction.Controllers
         }
 
         // POST: api/Users
+        [Authorize(Roles = "admin")]
+        [Route("")]
         [ResponseType(typeof(User))]
         public IHttpActionResult PostUser(UserRegisterViewModel userRegisterViewModel)
         {
@@ -75,10 +77,12 @@ namespace TutorialAction.Controllers
         }
 
         // DELETE: api/Users/5
+        [Authorize(Roles = "admin")]
+        [Route("{userID:int}")]
         [ResponseType(typeof(User))]
-        public IHttpActionResult DeleteUser(int id)
+        public IHttpActionResult DeleteUser(int userID)
         {
-            User user = tutorialActionContext.Users.Find(id);
+            User user = tutorialActionContext.Users.Find(userID);
             if (user == null)
             {
                 return NotFound();
@@ -97,11 +101,6 @@ namespace TutorialAction.Controllers
                 tutorialActionContext.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool UserExists(string id)
-        {
-            return tutorialActionContext.Users.Count(e => e.Id == id) > 0;
         }
     }
 }

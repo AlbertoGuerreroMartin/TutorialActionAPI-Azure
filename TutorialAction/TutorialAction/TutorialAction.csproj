@@ -152,6 +152,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\ReservesController.cs" />
+    <Compile Include="Controllers\TimetablesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Migrations\201706040121273_Initial.cs" />
@@ -162,11 +163,21 @@
     <Compile Include="Migrations\201706040124566_AddReserveModel.Designer.cs">
       <DependentUpon>201706040124566_AddReserveModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706041824077_AddTimetableEntity.cs" />
+    <Compile Include="Migrations\201706041824077_AddTimetableEntity.Designer.cs">
+      <DependentUpon>201706041824077_AddTimetableEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706041831078_UpdateTimetableEntity.cs" />
+    <Compile Include="Migrations\201706041831078_UpdateTimetableEntity.Designer.cs">
+      <DependentUpon>201706041831078_UpdateTimetableEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Reserve.cs" />
+    <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TutorialActionContext.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\GenericResponseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Startup.cs" />
@@ -187,6 +198,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706040124566_AddReserveModel.resx">
       <DependentUpon>201706040124566_AddReserveModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706041824077_AddTimetableEntity.resx">
+      <DependentUpon>201706041824077_AddTimetableEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706041831078_UpdateTimetableEntity.resx">
+      <DependentUpon>201706041831078_UpdateTimetableEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
