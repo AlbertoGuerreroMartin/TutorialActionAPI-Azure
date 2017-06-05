@@ -29,26 +29,45 @@ namespace TutorialAction.Models
         public string date { get; set; }
         public string hour { get; set; }
 
-        public static Func<Reserve, ReserveResponseViewModel> parseToReserveResponseViewModel()
+        public static Func<Reserve, ReserveResponseViewModel> parseToReserveResponseViewModel(string role)
         {
-            return r => r.toReserveResponseViewModel();
+            return r => r.toReserveResponseViewModel(role);
         }
 
-        public ReserveResponseViewModel toReserveResponseViewModel()
+        public ReserveResponseViewModel toReserveResponseViewModel(string role)
         {
-            return new ReserveResponseViewModel
+            if(role == "student")
             {
-                reserveid = reserveID,
-                courseid = courseID,
-                firstname = teacher.firstname,
-                lastname = teacher.lastname,
-                email = teacher.Email,
-                tutorshipType = tutorshipType,
-                reason = motive,
-                date = date,
-                hour = hour,
-                courseName = course.courseName
-            };
+                return new ReserveResponseViewModel
+                {
+                    reserveid = reserveID,
+                    courseid = courseID,
+                    firstname = teacher.firstname,
+                    lastname = teacher.lastname,
+                    email = teacher.Email,
+                    tutorshipType = tutorshipType,
+                    reason = motive,
+                    date = date,
+                    hour = hour,
+                    courseName = course.courseName
+                };
+            }
+            else
+            {
+                return new ReserveResponseViewModel
+                {
+                    reserveid = reserveID,
+                    courseid = courseID,
+                    firstname = student.firstname,
+                    lastname = student.lastname,
+                    email = student.Email,
+                    tutorshipType = tutorshipType,
+                    reason = motive,
+                    date = date,
+                    hour = hour,
+                    courseName = course.courseName
+                };
+            }
         }
     }
 
@@ -74,5 +93,11 @@ namespace TutorialAction.Models
         public string date;
         public string hour;
         public string courseName;
+    }
+
+    public class ReserveCompletionParametersViewModel
+    {
+        public int reserveID;
+        public int duration;
     }
 }

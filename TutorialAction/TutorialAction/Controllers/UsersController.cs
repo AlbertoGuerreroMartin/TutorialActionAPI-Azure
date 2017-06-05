@@ -17,7 +17,7 @@ using TutorialAction.Models;
 
 namespace TutorialAction.Controllers
 {
-    [RoutePrefix("api/user")]
+    [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {
         private TutorialActionContext tutorialActionContext = new TutorialActionContext();
@@ -30,15 +30,15 @@ namespace TutorialAction.Controllers
             roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(this.tutorialActionContext));
         }
 
-        // GET: api/user       <- DEBUG: returns all users
-        [Route("")]
+        // GET: api/users/all       <- DEBUG: returns all users
+        [Route("all")]
         [Authorize(Roles = "admin")]
         public IQueryable<User> GetUsers()
         {
             return tutorialActionContext.Users;
         }
 
-        // GET: api/user/info
+        // GET: api/users/info
         [Authorize]
         [Route("info")]
         [ResponseType(typeof(User))]
@@ -51,7 +51,7 @@ namespace TutorialAction.Controllers
             // return new JObject(new JArray(db.Users.ToList().Select(Models.User.userJsonParser()))).ToString();
         }
 
-        // POST: api/Users
+        // POST: api/users
         [Authorize(Roles = "admin")]
         [Route("")]
         [ResponseType(typeof(User))]
@@ -76,7 +76,7 @@ namespace TutorialAction.Controllers
             return Ok("User '" + userRegisterViewModel.username + "' registered successfully.");
         }
 
-        // DELETE: api/Users/5
+        // DELETE: api/users/5
         [Authorize(Roles = "admin")]
         [Route("{userID:int}")]
         [ResponseType(typeof(User))]

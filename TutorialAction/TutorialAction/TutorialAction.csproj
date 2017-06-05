@@ -153,6 +153,7 @@
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\ReservesController.cs" />
     <Compile Include="Controllers\TimetablesController.cs" />
+    <Compile Include="Controllers\TutorshipsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Migrations\201706040121273_Initial.cs" />
     <Compile Include="Migrations\201706040121273_Initial.Designer.cs">
@@ -173,6 +174,14 @@
     <Compile Include="Migrations\201706050158584_AddTutorshipModel.cs" />
     <Compile Include="Migrations\201706050158584_AddTutorshipModel.Designer.cs">
       <DependentUpon>201706050158584_AddTutorshipModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706051048306_RemoveReserveID.cs" />
+    <Compile Include="Migrations\201706051048306_RemoveReserveID.Designer.cs">
+      <DependentUpon>201706051048306_RemoveReserveID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706051138154_RemoveMinutes.cs" />
+    <Compile Include="Migrations\201706051138154_RemoveMinutes.Designer.cs">
+      <DependentUpon>201706051138154_RemoveMinutes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
@@ -211,6 +220,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706050158584_AddTutorshipModel.resx">
       <DependentUpon>201706050158584_AddTutorshipModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706051048306_RemoveReserveID.resx">
+      <DependentUpon>201706051048306_RemoveReserveID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706051138154_RemoveMinutes.resx">
+      <DependentUpon>201706051138154_RemoveMinutes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

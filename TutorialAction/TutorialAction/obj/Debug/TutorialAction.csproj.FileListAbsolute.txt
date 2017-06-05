@@ -73,3 +73,5 @@ C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\o
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.AddTimetableEntity.resources
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.UpdateTimetableEntity.resources
 C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.AddTutorshipModel.resources
+C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.RemoveReserveID.resources
+C:\Users\alber\Documents\TutorialActionAPI-Azure\TutorialAction\TutorialAction\obj\Debug\TutorialAction.Migrations.RemoveMinutes.resources

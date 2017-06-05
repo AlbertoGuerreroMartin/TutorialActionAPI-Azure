@@ -36,14 +36,14 @@ namespace TutorialAction.Controllers
             {
                 return tutorialActionContext.Reserves
                     .Where(r => r.teacherID == currentUser.Id)
-                    .Select(Reserve.parseToReserveResponseViewModel())
+                    .Select(Reserve.parseToReserveResponseViewModel(userRole))
                     .ToList();                
             }
             else if (userRole == "student")
             {
                 return tutorialActionContext.Reserves
                     .Where(r => r.studentID == currentUser.Id)
-                    .Select(Reserve.parseToReserveResponseViewModel())
+                    .Select(Reserve.parseToReserveResponseViewModel(userRole))
                     .ToList();
             }
             else
@@ -56,7 +56,7 @@ namespace TutorialAction.Controllers
         [Authorize(Roles = "student")]
         [Route("create")]
         [ResponseType(typeof(GenericResponseViewModel))]
-        public GenericResponseViewModel Post(CreateReserveParametersViewModel parameters)
+        public GenericResponseViewModel PostCreateReserve(CreateReserveParametersViewModel parameters)
         {
             var currentUser = userManager.FindById(User.Identity.GetUserId());
             var reserve = new Reserve
@@ -79,16 +79,62 @@ namespace TutorialAction.Controllers
             };
         }
 
+        // POST: api/reserves
+        [Authorize(Roles = "teacher")]
+        [Route("complete")]
+        [ResponseType(typeof(GenericResponseViewModel))]
+        public IHttpActionResult Post(ReserveCompletionParametersViewModel parameters)
+        {
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            var reserve = tutorialActionContext.Reserves.Find(parameters.reserveID);
+
+            if(reserve != null && reserve.teacherID == currentUser.Id)
+            {
+                var tutorship = new Tutorship
+                {
+                    teacherID = reserve.teacherID,
+                    studentID = reserve.studentID,
+                    courseID = reserve.courseID,
+                    reserved = true,
+                    tutorshipType = reserve.tutorshipType,
+                    motive = reserve.motive,
+                    date = reserve.date,
+                    hour = reserve.hour,
+                    duration = parameters.duration
+                };
+
+                tutorialActionContext.Reserves.Remove(reserve);
+                tutorialActionContext.Tutorships.Add(tutorship);
+                tutorialActionContext.SaveChanges();
+
+                return Ok(new GenericResponseViewModel
+                {
+                    statusCode = "200",
+                    message = "Reserva completada correctamente."
+                });
+            }
+            else
+            {
+                return Ok(new GenericResponseViewModel
+                {
+                    statusCode = "400",
+                    message = "Error en la consulta: no existe una reserva con ese ID"
+                });
+            }
+        }
+
         // DELETE: api/reserves/5
         [Authorize(Roles = "student")]
         [Route("{reserveID:int}")]
         [ResponseType(typeof(ReserveResponseViewModel))]
         public IHttpActionResult Delete(int reserveID)
         {
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            var userRole = roleManager.FindById(currentUser.Roles.First().RoleId).Name;
             var reserveToDelete = tutorialActionContext.Reserves.Find(reserveID);
             if(reserveToDelete != null)
             {
-                var reserveViewModel = reserveToDelete.toReserveResponseViewModel();
+                var reserveViewModel = reserveToDelete.toReserveResponseViewModel(userRole);
                 tutorialActionContext.Reserves.Remove(reserveToDelete);
                 tutorialActionContext.SaveChanges();
                 return Ok(reserveViewModel);
