@@ -29,6 +29,28 @@ namespace TutorialAction.Models
                 new JProperty("role", u.Roles.First())
             });
         }
+
+        public static Func<User, UserResponseViewModel> parseToUserResponseViewModel(RoleManager<IdentityRole> roleManager)
+        {
+            return u => {
+                var roleName = roleManager.FindById(u.Roles.First().RoleId).Name;
+                return u.toUserResponseViewModel(roleName);
+            };
+        }
+
+        public UserResponseViewModel toUserResponseViewModel(string role)
+        {
+            return new UserResponseViewModel
+            {
+                Id = Id,
+                username = UserName,
+                firstname = firstname,
+                lastname = lastname,
+                Email = Email,
+                role = role,
+                courses = courses.ToList()
+            };
+        }
     }
 
     public class UserRegisterViewModel
@@ -53,5 +75,16 @@ namespace TutorialAction.Models
 
             return user;
         }
+    }
+
+    public class UserResponseViewModel
+    {
+        public string Id;
+        public string username;
+        public string firstname;
+        public string lastname;
+        public string Email;
+        public string role;
+        public List<Course> courses;
     }
 }

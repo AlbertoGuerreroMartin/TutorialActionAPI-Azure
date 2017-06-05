@@ -33,21 +33,24 @@ namespace TutorialAction.Controllers
         // GET: api/users/all       <- DEBUG: returns all users
         [Route("all")]
         [Authorize(Roles = "admin")]
-        public IQueryable<User> GetUsers()
+        [ResponseType(typeof(List<User>))]
+        public List<UserResponseViewModel> GetUsers()
         {
-            return tutorialActionContext.Users;
+            return tutorialActionContext.Users
+                .Select(Models.User.parseToUserResponseViewModel(roleManager))
+                .ToList();
         }
 
         // GET: api/users/info
         [Authorize]
         [Route("info")]
-        [ResponseType(typeof(User))]
-        public User GetInfo()
+        [ResponseType(typeof(UserResponseViewModel))]
+        public UserResponseViewModel GetInfo()
         {
             var currentUser = userManager.FindById(User.Identity.GetUserId());
             var roleName = roleManager.FindById(currentUser.Roles.First().RoleId).Name;
             currentUser.courses = currentUser.courses.Select(Course.filterUsersByRole(roleName, roleManager)).ToList();     // Filter courses users of the opposite role
-            return currentUser;
+            return currentUser.toUserResponseViewModel(roleName);
             // return new JObject(new JArray(db.Users.ToList().Select(Models.User.userJsonParser()))).ToString();
         }
 

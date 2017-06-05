@@ -39,7 +39,23 @@ namespace TutorialAction.Providers
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
             identity.AddClaim(new Claim(ClaimTypes.Role, userRole));    // This is, theoretically, handled automatically by OWIN. Setting role claim manually shouldn't be neccessary. But it just don't work.
 
-            context.Validated(identity);
+            var props = new AuthenticationProperties(new Dictionary<string, string>
+            {
+                {
+                    "role", userRole
+                },
+            });
+            var ticket = new AuthenticationTicket(identity, props);
+            context.Validated(ticket);
+        }
+
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
+            {
+                context.AdditionalResponseParameters.Add(property.Key, property.Value);
+            }
+            return Task.FromResult<object>(null);
         }
     }
 }

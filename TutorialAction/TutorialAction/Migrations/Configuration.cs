@@ -64,7 +64,7 @@ namespace TutorialAction.Migrations
                 firstname = "Francisco",
                 lastname = "Serradilla García"
             };
-            if (userManager.FindByName(jennifer.UserName) == null)
+            if (userManager.FindByName(serradilla.UserName) == null)
             {
                 userManager.Create(serradilla, "password");
                 userManager.AddToRole(serradilla.Id, "teacher");

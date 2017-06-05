@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using Swashbuckle.Application;
@@ -17,16 +18,41 @@ namespace TutorialAction
     {
         public void Configuration(IAppBuilder app)
         {
+            ConfigureOAuth(app);
+
             HttpConfiguration config = new HttpConfiguration();
             config
                 .EnableSwagger(c => c.SingleApiVersion("v1", "Tutorial Action API"))
                 .EnableSwaggerUi();
 
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute
+            (
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+
+            // Avoid self reference loop
+            config.Formatters.JsonFormatter
+                .SerializerSettings
+                .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
+            app.UseCors(CorsOptions.AllowAll);
+            app.UseWebApi(config);
+
+            /*
+            GlobalConfiguration.Configuration
+                .EnableSwagger(c => c.SingleApiVersion("v1", "Tutorial Action API"))
+                .EnableSwaggerUi();
+            
             ConfigureOAuth(app);
 
-            WebApiConfig.Register(config);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-            app.UseWebApi(config);
+            app.UseWebApi(GlobalConfiguration.Configuration);
+            */
         }
 
         public void ConfigureOAuth(IAppBuilder app)
@@ -41,7 +67,13 @@ namespace TutorialAction
 
             // Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            app.UseOAuthBearerAuthentication
+            (
+                new OAuthBearerAuthenticationOptions
+                {
+                    Provider = new OAuthBearerAuthenticationProvider()
+                }
+            );
         }
     }
 }

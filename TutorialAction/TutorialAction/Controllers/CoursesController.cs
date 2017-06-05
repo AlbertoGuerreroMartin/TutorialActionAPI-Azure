@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,13 +20,14 @@ namespace TutorialAction.Controllers
     [Authorize(Roles = "admin")]
     public class CoursesController : ApiController
     {
-        private TutorialActionContext db = new TutorialActionContext();
+        private TutorialActionContext tutorialActionContext = new TutorialActionContext();
 
         // GET: api/courses
         [Route("")]
+        [ResponseType(typeof(List<Course>))]
         public IQueryable<Course> GetCourses()
         {
-            return db.Courses;
+            return tutorialActionContext.Courses;
         }
 
         // GET: api/courses/5
@@ -33,7 +35,7 @@ namespace TutorialAction.Controllers
         [ResponseType(typeof(Course))]
         public async Task<IHttpActionResult> GetCourse(int courseID)
         {
-            Course course = await db.Courses.FindAsync(courseID);
+            Course course = await tutorialActionContext.Courses.FindAsync(courseID);
             if (course == null)
             {
                 return NotFound();
@@ -62,17 +64,17 @@ namespace TutorialAction.Controllers
             };
             foreach (var userID in courseRegisterViewModel.users)
             {
-                User user = db.Users.Find(userID);
+                User user = tutorialActionContext.Users.Find(userID);
                 if (user != null)
                 {
                     course.users.Add(user);
                 }
             }
 
-            db.Courses.Add(course);
-            await db.SaveChangesAsync();
+            tutorialActionContext.Courses.Add(course);
+            await tutorialActionContext.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = course.courseID }, course);
+            return Ok("Course registered successfully.");
         }
 
         // DELETE: api/courses/5
@@ -80,14 +82,14 @@ namespace TutorialAction.Controllers
         [ResponseType(typeof(Course))]
         public async Task<IHttpActionResult> DeleteCourse(int courseID)
         {
-            Course course = await db.Courses.FindAsync(courseID);
+            Course course = await tutorialActionContext.Courses.FindAsync(courseID);
             if (course == null)
             {
                 return NotFound();
             }
 
-            db.Courses.Remove(course);
-            await db.SaveChangesAsync();
+            tutorialActionContext.Courses.Remove(course);
+            await tutorialActionContext.SaveChangesAsync();
 
             return Ok(course);
         }
@@ -96,7 +98,7 @@ namespace TutorialAction.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                tutorialActionContext.Dispose();
             }
             base.Dispose(disposing);
         }
